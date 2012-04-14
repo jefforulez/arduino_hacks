@@ -33,8 +33,8 @@ const int X_AXIS_PIN = 7 ;
 const int Y_AXIS_PIN = 6 ;
 
 // accelerometer tolerance
-const int LEVEL_MIN = 4000 ; // 4900 ;
-const int LEVEL_MAX = 5500 ; // 4980 ;
+const int LEVEL_MIN = 4900 ; // 4900 ;
+const int LEVEL_MAX = 4980 ; // 4980 ;
 
 const long BUZZER_DURATION = 200 ;
 
