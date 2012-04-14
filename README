@@ -1,0 +1,22 @@
+
+//
+// arduino hacks
+//
+// my personal collections of arduino hacks
+//
+// author: @jefforulez
+//
+
+hacks are c++ - not processing - and require a custom version of
+
+  tobiasb bielohlawek's "Arduino.mk"
+  https://github.com/rngtng/Arduino.mk
+
+i'm working on cleaning this up and making them work out of the box with 
+
+  martin's atelier's "Arduino from the command line" 
+  http://mjo.tc/atelier/2009/02/arduino-cli.html
+
+in the meantime, i'll post my hacked version of Arduino.mk
+
+  
