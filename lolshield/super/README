@@ -1,0 +1,29 @@
+
+//
+// supercalifragilisticexpialidocious
+//
+// scroll supercalifragilisticexpialidocious across an lol shield
+//
+// author: @jefforulez
+//
+
+//
+// based on lol shield library sample code
+// http://code.google.com/p/lolshield/
+//
+
+//
+// parts
+//
+
+; arduino uno rev 2
+: http://arduino.cc/en/Main/arduinoBoardUno
+
+; lolshield
+: http://jimmieprodgers.com/kits/lolshield/
+
+//
+// wiring
+//
+
+1. plug the lolshield into the arduino
