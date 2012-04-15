@@ -7,16 +7,45 @@
 // author: @jefforulez
 //
 
+== introduction ==
+
 hacks are c++ - not processing - and require a custom version of
 
   tobiasb bielohlawek's "Arduino.mk"
   https://github.com/rngtng/Arduino.mk
 
-i'm working on cleaning this up and making them work out of the box with 
+i'm working on cleaning this up and making them work out of the box with
 
-  martin's atelier's "Arduino from the command line" 
+  martin's atelier's "Arduino from the command line"
   http://mjo.tc/atelier/2009/02/arduino-cli.html
 
 in the meantime, i'll post my hacked version of Arduino.mk
 
-  
+
+== compiling hacks ==
+
+i currently use the following setup to compile my arduino code:
+
+; macos 10.7.x
+
+; arduino 1.0 downloaded and installed
+: http://arduino.cc/hu/Main/Software
+
+; added my hacked version of Arduino.mk to the PATH
+: export PATH="$PATH:$HOME/local-dropbox/github/arduino_hacks/arduino-mk-0.6-jeffo"
+
+; created a libraries/ folder
+: mkdir $HOME/local-dropbox/github/arduino_hacks/libraries
+
+; downloaded and unpacked the LoLShield library in the libraries/ folder
+: http://code.google.com/p/lolshield/downloads/detail?name=LoLShield%20v23.zip
+
+  > coulomb:arduino_hacks jeffo$ ls -l ./libraries/
+  total 0
+  drwxrwxr-x  13 jeffo  staff  442 Jan 14 17:12 LoLShield
+
+once the environment is setup, i cd to the project directory and run make:
+
+   > cd ~/local-dropbox/github/arduino_hacks/lolshield/zelda
+   > make && make upload
+
