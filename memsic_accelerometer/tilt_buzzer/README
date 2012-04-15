@@ -1,0 +1,59 @@
+
+//
+// tilt buzzer
+//
+// simple hack which shows and sounds an alarm when an accelerometer detects tilt
+//
+// author: @jefforulez
+//
+
+//
+//  ideas code and ideas stolen from:
+//
+// - http://www.instructables.com/id/Play-the-French-Can-Can-Using-an-Arduino-and-Buzze/
+// - http://www.arduino.cc/en/Tutorial/AccelerometerMemsic2125
+//
+
+//
+// parts
+//
+
+; arduino uno rev 2
+: http://arduino.cc/en/Main/arduinoBoardUno
+
+; makershield w/ mini breadboard
+: http://www.makershed.com/MakerShield_p/msms01.htm
+
+; memsic 2125 dual-axis accelerometer
+: http://www.parallax.com/tabid/768/ProductID/93/Default.aspx
+
+; radio shack 273-059 buzzer
+: http://www.radioshack.com/product/index.jsp?productId=2062397
+
+; resistors
+: 1 x 100R resistor
+: 2 x 220R resistor
+
+; various jumpers
+
+//
+// wiring
+//
+
+// leds
+
+1. connect D12 to LED1
+2. connect D13 to LED2
+
+// buzzer
+
+3. connect D3 to 100R resistor to radio shack 273-059 buzzer to GND
+
+// accelorometer
+
+4. PIN6 to 5V
+5. PIN3 to GND
+6. PIN2 to 220R resistor to D6 
+7. PIN5 to 220R resistor to D7
+
+
