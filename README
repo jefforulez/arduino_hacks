@@ -40,12 +40,13 @@ i currently use the following setup to compile my arduino code:
 ; downloaded and unpacked the LoLShield library in the libraries/ folder
 : http://code.google.com/p/lolshield/downloads/detail?name=LoLShield%20v23.zip
 
-  > coulomb:arduino_hacks jeffo$ ls -l ./libraries/
+  > ls -l ./libraries/
   total 0
   drwxrwxr-x  13 jeffo  staff  442 Jan 14 17:12 LoLShield
 
 once the environment is setup, i cd to the project directory and run make:
 
-   > cd ~/local-dropbox/github/arduino_hacks/lolshield/zelda
-   > make && make upload
+  > cd ~/local-dropbox/github/arduino_hacks/lolshield/zelda
+  > make && make upload
+
 
