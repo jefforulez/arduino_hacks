@@ -1,0 +1,24 @@
+
+//
+// ny giants lolshield
+//
+// flash the ny giants logo on a lolshield
+//
+// author: @jefforulez
+//
+
+//
+// parts
+//
+
+; arduino uno rev 2
+: http://arduino.cc/en/Main/arduinoBoardUno
+
+; lolshield ( blue of course! )
+: http://jimmieprodgers.com/kits/lolshield/
+
+//
+// wiring
+//
+
+1. plug the lolshield into the arduino
