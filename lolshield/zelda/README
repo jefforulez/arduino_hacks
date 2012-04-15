@@ -1,0 +1,29 @@
+
+//
+// zelda triforce
+//
+// flash the triforce on a lolshield
+//
+// author: @jefforulez
+//
+
+//
+// based on lol shield library sample code
+// http://code.google.com/p/lolshield/
+//
+
+//
+// parts
+//
+
+; arduino uno rev 2
+: http://arduino.cc/en/Main/arduinoBoardUno
+
+; lolshield ( blue of course! )
+: http://jimmieprodgers.com/kits/lolshield/
+
+//
+// wiring
+//
+
+1. plug the lolshield into the arduino
