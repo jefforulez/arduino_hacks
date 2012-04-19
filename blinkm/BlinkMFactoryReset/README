@@ -1,0 +1,33 @@
+
+//
+// blinkm factory reset
+//
+// simple script testing the BlinkM library
+//
+// author: @jefforulez
+//
+
+//
+// uses my version of BlinkM_funcs converted to a c++ library
+// http://code.google.com/p/blinkm-projects/
+//
+
+//
+// parts
+//
+
+; arduino uno rev 2
+: http://arduino.cc/en/Main/arduinoBoardUno
+
+; blinkm
+: http://thingm.com/products/blinkm.html
+
+//
+// wiring
+//
+
+1. plug the blinkm into the arduino.
+
+  see http://thingm.com/products/blinkm/quick-start-guide.html for more info
+
+

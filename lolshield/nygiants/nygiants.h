@@ -12,8 +12,8 @@
 // http://code.google.com/p/lolshield/
 //
 
-#ifndef rulez_nygiants_h
-#define rulez_nygiants_h
+#ifndef RULEZ_NYGIANTS_H
+#define RULEZ_NYGIANTS_H
 
 //
 #include <Arduino.h>

@@ -5,7 +5,7 @@
 #
 # Copyright (C) 2010 Martin Oldfield <m@mjo.tc>, based on work that is
 # Copyright Nicholas Zambetti, David A. Mellis & Hernando Barragan
-# 
+#
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU Lesser General Public License as
 # published by the Free Software Foundation; either version 2.1 of the
@@ -38,7 +38,7 @@
 #
 #         0.6  22.vi.2011  M J Oldfield
 #                          - added ard-parse-boards supports
-#                          - added -lc to linker opts, 
+#                          - added -lc to linker opts,
 #                            on Fabien Le Lez's advice
 #
 ########################################################################
@@ -102,7 +102,7 @@
 #
 # ARDUINO WITH OTHER TOOLS
 #
-# If the tools aren't in the Arduino distribution, then you need to 
+# If the tools aren't in the Arduino distribution, then you need to
 # specify their location:
 #
 #    AVR_TOOLS_PATH = /usr/bin
@@ -120,7 +120,7 @@
 #
 # You might also need to set the fuse bits, but typically they'll be
 # read from boards.txt, based on the BOARD_TAG variable:
-#     
+#
 #     ISP_LOCK_FUSE_PRE  = 0x3f
 #     ISP_LOCK_FUSE_POST = 0xcf
 #     ISP_HIGH_FUSE      = 0xdf
@@ -129,7 +129,7 @@
 #
 # I think the fuses here are fine for uploading to the ATmega168
 # without bootloader.
-# 
+#
 # To actually do this upload use the ispload target:
 #
 #    make ispload
@@ -150,7 +150,7 @@ ARDUINO_PORT = /dev/cu.usb*
 endif
 
 ifndef ARDUINO_USER_LIB_PATH
-ARDUINO_USER_LIB_PATH = $(HOME)/local-dropbox/arduino/libraries
+ARDUINO_USER_LIB_PATH = $(HOME)/local-dropbox/github/arduino_hacks/libraries
 endif
 
 
@@ -268,7 +268,7 @@ endif
 endif
 
 # all the objects!
-OBJS            = $(LOCAL_OBJS) $(CORE_OBJS) $(LIB_OBJS) $(LIB_OBJS_C) $(LIB_USER_OBJS) $(LIB_USER_OBJS_C) 
+OBJS            = $(LOCAL_OBJS) $(CORE_OBJS) $(LIB_OBJS) $(LIB_OBJS_C) $(LIB_USER_OBJS) $(LIB_USER_OBJS_C)
 
 ########################################################################
 # Rules for making stuff
@@ -348,7 +348,7 @@ ARD_PORT      = $(firstword $(wildcard $(ARDUINO_PORT)))
 #
 
 # user library sources
-$(OBJDIR)/libs/%.o: $(ARDUINO_USER_LIB_PATH)/%.cpp 
+$(OBJDIR)/libs/%.o: $(ARDUINO_USER_LIB_PATH)/%.cpp
 	mkdir -p $(dir $@)
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
 
@@ -357,7 +357,7 @@ $(OBJDIR)/libs/%.o: $(ARDUINO_USER_LIB_PATH)/%.c
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
 
 # library sources
-$(OBJDIR)/libs/%.o: $(ARDUINO_LIB_PATH)/%.cpp 
+$(OBJDIR)/libs/%.o: $(ARDUINO_LIB_PATH)/%.cpp
 	mkdir -p $(dir $@)
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
 
@@ -477,13 +477,13 @@ raw_upload:	$(TARGET_HEX)
 # stty on MacOS likes -F, but on Debian it likes -f redirecting
 # stdin/out appears to work but generates a spurious error on MacOS at
 # least. Perhaps it would be better to just do it in perl ?
-reset:		
+reset:
 		for STTYF in 'stty --file' 'stty -f' 'stty <' ; \
 		  do $$STTYF /dev/tty >/dev/null 2>/dev/null && break ; \
 		done ;\
 		$$STTYF $(ARD_PORT)  hupcl ;\
 		(sleep 0.1 || sleep 1)     ;\
-		$$STTYF $(ARD_PORT) -hupcl 
+		$$STTYF $(ARD_PORT) -hupcl
 
 ispload:	$(TARGET_HEX)
 		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ISP_OPTS) -e \
@@ -502,7 +502,7 @@ clean:
 depends:	$(DEPS)
 		cat $(DEPS) > $(DEP_FILE)
 
-show_boards:	
+show_boards:
 		$(PARSE_BOARD) --boards
 
 .PHONY:	all clean depends upload raw_upload reset show_boards
