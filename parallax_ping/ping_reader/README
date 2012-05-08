@@ -1,0 +1,33 @@
+
+//
+// ping reader
+//
+// simple hack which reads the input from the parallax ping every second
+//
+// author: @jefforulez
+//
+
+//
+// parts
+//
+
+; arduino uno rev 2
+: http://arduino.cc/en/Main/arduinoBoardUno
+
+; makershield w/ mini breadboard
+: http://www.makershed.com/MakerShield_p/msms01.htm
+
+; parallax ping sensor
+: http://www.parallax.com/tabid/768/ProductID/92/Default.aspx
+
+; various jumpers
+
+//
+// wiring
+//
+
+// PING
+
+1. PING 5V to Arduino 5V
+2. PING GND to Arduino GND
+3. PING Signal to Arduino D7
