@@ -1,8 +1,6 @@
 
 TARGET = nygiants
 
-ARDUINO_LIBS =
+ARDUINO_LIBS = LoLShield
 
-ARDUINO_USER_LIBS = LoLShield
-
-include /Users/jeffo/local-dropbox/github/arduino_hacks/arduino-mk-0.6-jeffo/Arduino.mk
+include $(ARDUINO_MAKEFILE)
