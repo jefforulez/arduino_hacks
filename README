@@ -25,12 +25,12 @@ i currently use the following setup to compile my arduino code:
 ; checkout my for of martin oldfield's Arduino-Makefile
 
   > cd $PATH_TO_SANDBOX
-  > git clone https://github.com/jefforulez/Arduino-Makefile.git
+  > git clone git://github.com/jefforulez/Arduino-Makefile.git
   
 ; checkout the arduino_hacks code
 
   > cd $PATH_TO_SANDBOX
-  > git clone https://github.com/jefforulez/arduino_hacks.git
+  > git clone git://github.com/jefforulez/arduino_hacks.git
 
 ; create a libraries/ folder
 
