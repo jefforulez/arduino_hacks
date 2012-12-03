@@ -9,44 +9,54 @@
 
 == introduction ==
 
-hacks are c++ - not processing - and require a custom version of
+this is just my arduino sandbox.  the scripts are c++, not processing.
 
-  tobiasb bielohlawek's "Arduino.mk"
-  https://github.com/rngtng/Arduino.mk
+to build the scripts, follow the instructions below.
 
-i'm working on cleaning this up and making them work out of the box with
-
-  martin's atelier's "Arduino from the command line"
-  http://mjo.tc/atelier/2009/02/arduino-cli.html
-
-in the meantime, i'll post my hacked version of Arduino.mk
-
-
-== compiling hacks ==
+== setup ==
 
 i currently use the following setup to compile my arduino code:
 
-; macos 10.7.x
+; macos 10.8.x
 
-; arduino 1.0 downloaded and installed
+; download and install arduino 1.0.x
 : http://arduino.cc/hu/Main/Software
 
-; added my hacked version of Arduino.mk to the PATH
-: export PATH="$PATH:$HOME/local-dropbox/github/arduino_hacks/arduino-mk-0.6-jeffo"
+; checkout my for of martin oldfield's Arduino-Makefile
 
-; created a libraries/ folder
-: mkdir $HOME/local-dropbox/github/arduino_hacks/libraries
+  > cd $PATH_TO_SANDBOX
+  > git clone https://github.com/jefforulez/Arduino-Makefile.git
+  
+; checkout the arduino_hacks code
+
+  > cd $PATH_TO_SANDBOX
+  > git clone https://github.com/jefforulez/arduino_hacks.git
+
+; create a libraries/ folder
+
+  > mkdir $PATH_TO_SANDBOX/arduino_hacks/libraries
 
 ; downloaded and unpacked the LoLShield library in the libraries/ folder
 : http://code.google.com/p/lolshield/downloads/detail?name=LoLShield%20v23.zip
 
+  > cd $PATH_TO_SANDBOX/arduino_hacks/libraries
   > ls -l ./libraries/
   total 0
   drwxrwxr-x  13 jeffo  staff  442 Jan 14 17:12 LoLShield
 
-once the environment is setup, i cd to the project directory and run make:
+; edit the environment to match your paths
 
-  > cd ~/local-dropbox/github/arduino_hacks/lolshield/zelda
+  > vim $PATH_TO_SANDBOX/arduino_hack/arduino_env.sh
+
+== compiling ==
+
+; setup environmental variables
+
+  > . $PATH_TO_SANDBOX/arduino_hack/arduino_env.sh
+
+; compile and upload a project
+
+  > cd $PATH_TO_SANDBOX/arduino_hacks/lolshield/zelda
   > make && make upload
 
 
