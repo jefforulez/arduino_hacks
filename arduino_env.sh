@@ -16,7 +16,7 @@ export ARDUINO_MAKEFILE="$ARDUINO_MAKEFILE_DIR/arduino-mk/Arduino.mk"
 #
 
 # required
-export ARDUINO_DIR="/Applications/Arduino-1.0.2.app/Contents/Resources/Java"
+export ARDUINO_DIR="/Applications/Arduino-1.0.5.app/Contents/Resources/Java"
 export ARDUINO_PORT="/dev/cu.usb*"
 export ARDMK_DIR="$ARDUINO_MAKEFILE_DIR"
 
