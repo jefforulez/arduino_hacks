@@ -11,11 +11,11 @@ MAIN:
 	my $channel = $ARGV[4] || '#gongbot' ;
 	
 	print STDERR "starting GongBot\n" ;
-	print STDERR "\t server: $ARGV[0]\n" ;
-	print STDERR "\t port: $ARGV[1]\n" ;
-	print STDERR "\t ssl: $ARGV[2]\n" ;
-	print STDERR "\t data_filename: $ARGV[3]\n" ;
-	print STDERR "\t channel: $channel\n" ;
+	print STDERR "  server: $ARGV[0]\n" ;
+	print STDERR "  port: $ARGV[1]\n" ;
+	print STDERR "  ssl: $ARGV[2]\n" ;
+	print STDERR "  data_filename: $ARGV[3]\n" ;
+	print STDERR "  channel: $channel\n" ;
 
 	my $gongbot = GongBot->new( 
 		server   => $ARGV[0],
@@ -25,7 +25,7 @@ MAIN:
 		nick     => 'gongbot', 
 		#
 		_gongbot  => { 
-			data_filename => $ARGV[3], 
+			data_source => $ARGV[3], 
 		},
 	) ;
 
@@ -35,7 +35,7 @@ MAIN:
 
 sub usage
 {
-	print "gong_bot.pl <server> <port> <ssl> <data_filename> <channel>\n" ;
+	print "gong_bot.pl <server> <port> <ssl> <serial_dev>|<listen_ip:port> <channel>\n" ;
 	exit 1 ;
 }
 

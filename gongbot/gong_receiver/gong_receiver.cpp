@@ -59,17 +59,12 @@ void loop()
 	// data indicator
 	digitalWrite( ledPin, HIGH ) ;
 
-	incomingByte = Serial.read() - '0' ;
-	Serial.read() ; // return charaters 
-	Serial.read() ; // return charaters 
+	incomingByte = Serial.read() ; // - '0' ;
 	
 	// connect to the server and send level
 	if ( client.connect( serverName, serverPort ) > 0 )
 	{
-		client.print( "GET /gongbot.pl?level=" ) ;
-		client.print( incomingByte ) ;
-		client.println() ;
-		client.println() ;
+		client.println( incomingByte ) ;
 		client.stop() ;
 	}
 

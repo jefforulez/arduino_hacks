@@ -9,20 +9,34 @@
 
 #include "gong_sensor.h"
 
+// constants
+
+// samples per second
+const int SAMPLE_RATE_HZ = 100 ;  
+
+// number of samples used to compute the average
+const int NUMBER_READINGS = 5 ; 
+
+// threshold for sending trigger
+const int SENSOR_THRESHOLD = 1 ;
+
+// minimum time to wait between triggers
+const unsigned long THROTTLE_MS = 1500 ;
+
 const int SENSOR_PIN = A0 ;
 
-const int NUMBER_READINGS = 10 ;
+// global variables
 
 int readings[ NUMBER_READINGS ] ;
+
 int index = 0 ;
 int total = 0 ;
 int average = 0 ;
 
-const int SENSOR_THRESHOLD = 3 ;
-
-const unsigned long THROTTLE_MS = 1500 ;
 unsigned long last_sent_ms = 0 ;
 unsigned long current_ms = 0 ;
+
+int current_throttle_ms = THROTTLE_MS ;
 
 void setup()
 {
@@ -31,6 +45,7 @@ void setup()
 	for ( int thisReading = 0 ; thisReading < NUMBER_READINGS ; thisReading++ ) {
 		readings[ thisReading ] = 0 ;
 	}
+
 }
 
 void loop()
@@ -45,17 +60,33 @@ void loop()
 	// compute the average
 	average = total / NUMBER_READINGS ;
 	
-
 	// print the average, with a throttle
-	if ( average > SENSOR_THRESHOLD )
+	if ( average >= SENSOR_THRESHOLD )
 	{
 		current_ms = millis() ;
 		
-		if ( ( current_ms - last_sent_ms ) > THROTTLE_MS )
+		if ( ( current_ms - last_sent_ms ) > current_throttle_ms )
 		{
-			Serial.println( average ) ;
+			// adjust the next throttle based on the strength of the last strike
+			current_throttle_ms = ( average > NUMBER_READINGS )
+				? int( average / NUMBER_READINGS ) * THROTTLE_MS
+				: THROTTLE_MS 
+				;
+
+			Serial.print( average ) ;
+			
+/*
+			Serial.print( "val : " ) ;
+			Serial.print( val ) ;
+			Serial.print( ", average : " ) ;
+			Serial.print( average ) ;
+			Serial.print( ", throttle : " ) ;
+			Serial.println( current_throttle_ms ) ;
+*/
+			
 			last_sent_ms = current_ms ;	
 		}
+
 	}
 	
 	// update the readings index
@@ -65,7 +96,7 @@ void loop()
 	}
 
 	//
-	delay( 10 ) ;
+	delay( 1000 / SAMPLE_RATE_HZ ) ;
 }
 
 
