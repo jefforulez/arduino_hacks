@@ -9,7 +9,9 @@
 
 #include "gong_sensor.h"
 
+//
 // constants
+//
 
 // samples per second
 const int SAMPLE_RATE_HZ = 100 ;  
@@ -25,7 +27,9 @@ const unsigned long THROTTLE_MS = 1500 ;
 
 const int SENSOR_PIN = A0 ;
 
+//
 // global variables
+//
 
 int readings[ NUMBER_READINGS ] ;
 
@@ -37,6 +41,10 @@ unsigned long last_sent_ms = 0 ;
 unsigned long current_ms = 0 ;
 
 int current_throttle_ms = THROTTLE_MS ;
+
+//
+// methods
+//
 
 void setup()
 {
@@ -50,6 +58,7 @@ void setup()
 
 void loop()
 {
+	// read the current value of the sensor
 	int val = analogRead( SENSOR_PIN ) ;
 	
 	// update the total
@@ -57,7 +66,7 @@ void loop()
 	readings[ index ] = val ;
 	total = total + readings[ index ] ;
 
-	// compute the average
+	// compute the average reading
 	average = total / NUMBER_READINGS ;
 	
 	// print the average, with a throttle
@@ -72,19 +81,16 @@ void loop()
 				? int( average / NUMBER_READINGS ) * THROTTLE_MS
 				: THROTTLE_MS 
 				;
-
-			Serial.print( average ) ;
+				
+			if ( current_throttle_ms > THROTTLE_MS * 3 ) {
+				current_throttle_ms = THROTTLE_MS * 2 ;
+			}
 			
-/*
-			Serial.print( "val : " ) ;
-			Serial.print( val ) ;
-			Serial.print( ", average : " ) ;
-			Serial.print( average ) ;
-			Serial.print( ", throttle : " ) ;
-			Serial.println( current_throttle_ms ) ;
-*/
-			
+			// adjust the last sent marker
 			last_sent_ms = current_ms ;	
+			
+			// send the trigger
+			Serial.println( average ) ;
 		}
 
 	}
@@ -95,7 +101,7 @@ void loop()
 		index = 0 ;
 	}
 
-	//
+	// respect the sample rate
 	delay( 1000 / SAMPLE_RATE_HZ ) ;
 }
 

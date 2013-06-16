@@ -52,14 +52,14 @@ void setup()
 void loop() 
 {				
 	// check for serial input
-	if ( Serial.available() <= 2 ) {
+	if ( Serial.available() < 1 ) {
 		return ;
 	}
 
 	// data indicator
 	digitalWrite( ledPin, HIGH ) ;
 
-	incomingByte = Serial.read() ; // - '0' ;
+	incomingByte = Serial.read() ;
 	
 	// connect to the server and send level
 	if ( client.connect( serverName, serverPort ) > 0 )

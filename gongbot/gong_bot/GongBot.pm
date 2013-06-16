@@ -74,12 +74,14 @@ sub connected
 	return ;
 }
 
+=pod
 sub said 
 {
 	my ( $self, $msg ) = @_ ;
 	print STDERR Dumper( $msg ), "\n" ;
 	return ;
 }
+=cut
 
 sub tick
 {
@@ -100,9 +102,9 @@ sub tick
 				{
 					$self->_report_gong_strike( $1 ) ;
 				}
-				else 
+				elsif ( $line ) 
 				{
-					# print STDERR "unexpected data, line : '$line'\n" ;
+					print STDERR "unexpected data, line : '$line'\n" ;
 				} 
 			}
 			elsif ( ref $fh eq 'IO::Socket::INET' )
@@ -138,18 +140,15 @@ sub _report_gong_strike
 
 	print STDERR "GongBot::_report_gong_strike( $val )\n" ;
 
-	if ( $val >= 5 ) 
-	{
-		my $body = ( $val >= 10 ) 
-				 ? "*** GONG ***" 
-				 : "... ding ..."
-				 ;
-	
-		$self->say(
-			channel => ( $self->channels )[0],
-			body    => $body,
-		) ;
-	}
+	my $body = ( $val >= 50 ) 
+			 ? "*** GONG ***" 
+			 : "... ding ..."
+			 ;
+
+	$self->say(
+		channel => ( $self->channels )[0],
+		body    => $body,
+	) ;
 
 }
 
