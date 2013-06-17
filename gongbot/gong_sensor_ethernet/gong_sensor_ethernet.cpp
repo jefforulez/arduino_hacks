@@ -7,7 +7,8 @@
 // author: @jefforulez
 //
 
-#include "gong_sensor.h"
+#include "gong_sensor_ethernet.h"
+
 
 //
 // constants
@@ -27,6 +28,24 @@ const unsigned long THROTTLE_MS = 1500 ;
 
 const int SENSOR_PIN = A0 ;
 
+
+//
+// networking constants
+//
+
+// @jefforulez laptop
+// char serverName[]    = "192.168.15.105" ;
+// const int serverPort = 46640 ;
+
+// @blip desktop
+char serverName[]    = "10.60.121.55" ;
+const int serverPort = 46640 ;
+
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED } ;
+
+EthernetClient client ;
+
+
 //
 // global variables
 //
@@ -42,6 +61,7 @@ unsigned long current_ms = 0 ;
 
 int current_throttle_ms = THROTTLE_MS ;
 
+
 //
 // methods
 //
@@ -50,6 +70,18 @@ void setup()
 {
 	Serial.begin( 9600 ) ;
 	
+	// configure ethernet board
+	if ( Ethernet.begin( mac ) == 0 ) {
+		while ( true ) ;
+	}
+
+	// wait for the board
+	delay( 1000 ) ;
+
+	// get and ip address
+	IPAddress ip = Ethernet.localIP() ;
+		
+	// clear the readings array
 	for ( int thisReading = 0 ; thisReading < NUMBER_READINGS ; thisReading++ ) {
 		readings[ thisReading ] = 0 ;
 	}
@@ -76,12 +108,15 @@ void loop()
 		
 		if ( ( current_ms - last_sent_ms ) > current_throttle_ms )
 		{
+			//
+			// TODO:  fix this
+			//
 			// adjust the next throttle based on the strength of the last strike
+			//
 			current_throttle_ms = ( average > NUMBER_READINGS )
 				? int( average / NUMBER_READINGS ) * THROTTLE_MS
 				: THROTTLE_MS 
 				;
-				
 			if ( current_throttle_ms > THROTTLE_MS * 3 ) {
 				current_throttle_ms = THROTTLE_MS * 2 ;
 			}
@@ -92,7 +127,7 @@ void loop()
 			// connect to the server and send level
 			if ( client.connect( serverName, serverPort ) > 0 )
 			{
-				client.println( incomingByte ) ;
+				client.print( average ) ;
 				client.stop() ;
 			}
 
@@ -109,6 +144,5 @@ void loop()
 	// respect the sample rate
 	delay( 1000 / SAMPLE_RATE_HZ ) ;
 }
-
 
 

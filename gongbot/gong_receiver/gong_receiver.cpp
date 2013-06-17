@@ -10,7 +10,6 @@
 #include "gong_receiver.h"
 
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED } ;
-byte server[] = { 107, 21, 151, 112 } ;
 
 const int ledPin = 7 ;
 

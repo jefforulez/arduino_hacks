@@ -71,3 +71,4 @@ void DisplayBitMap()
 	
 	return ;
 }
+
