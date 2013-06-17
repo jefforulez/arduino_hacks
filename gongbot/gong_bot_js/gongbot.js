@@ -20,8 +20,8 @@ const SERVER_PORT = 46640 ;
 //
 
 var irc = new irc.Client(
-	'irc.corp.pokkari.net', 
-	'gongbot', 
+	IRC_SERVER,
+	IRC_HANDLE, 
 	{
 		channels : [ IRC_CHANNEL ],
 		realName : IRC_REAL_NAME,
