@@ -1,0 +1,69 @@
+
+//
+// gongbot
+//
+// announce gong strikes in irc
+//
+// author: @jefforulez
+//
+
+== introduction ==
+
+the @blip office has several characteristics that made this project a necessity:
+
+1. gongs.  we have two of them.
+2. nerf guns.  we have way more than two of them.
+3. irc.  we only have one irc server, but it has lots of users
+
+== overview ==
+
+the goal of this project is simple:  announce nerf-to-gong interactions in irc.
+
+== code ==
+
+this project went through several configurations - hardware and software - before 
+i settled on the following setup:
+
+; sensor : ./gong_sensor_ethernet
+  
+  piezo transducer -> arduino uno -> ethernet shield 
+      
+; irc gateway : ./gong_bot_js
+
+  node.js app running on my work imac
+  
+
+there's code in here for other working, rubegoldbergesque, configurations:
+
+
+i. xbee-to-ethernet configuration
+
+; sensor : ./gong_sensor 
+
+  pieze transducer -> arduino uno -> xbee 
+  
+; receiver : ./gong_receiver
+
+  xbee -> arduino uno -> ethernet shield
+  
+; irc gateway : ./gong_bot
+
+  perl script that listens for gong events on a tcp/ip socket
+  
+
+ii. xbee-to-serial configuration
+
+; sensor : ./gong_sensor 
+
+  pieze transducer -> arduino uno -> xbee 
+  
+; receiver : ./gong_receiver_serial
+
+  xbee -> arduino uno -> serial usb
+  
+; irc gateway : ./gong_bot
+
+  perl script that listens for gong events on serial /dev
+
+  
+  
