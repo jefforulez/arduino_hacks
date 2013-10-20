@@ -28,13 +28,15 @@ const int BLINK_DELAY  = 200 ;
 // networking variables
 //
 
+// arduino mac address
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xEE } ;
+
 // @blip laptop
 char SERVER_IP[] = "10.60.121.111" ;
 const int SERVER_PORT = 46641 ;
 
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xEE } ;
-
-EthernetServer server( 80 ) ;
+// arduino server
+EthernetServer server( 14664 ) ;
 
 //
 // global variables

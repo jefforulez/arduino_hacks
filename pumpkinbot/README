@@ -7,11 +7,11 @@
 
 == introduction ==
 
-this project was born from three requirements:
+this project was born of three requirements:
 
 1. the @blip office has an irc server that people actually use
-2. the @blip irc server has an irc bot - plusplusbot - hat keeps score for when people say funny things
-3. @rickyrobinett invited me to hack-o-latern 2013 ( #HOL2013 ) and i wasn't smart enough to bail
+2. the @blip irc server has a bot - plusplusbot - that keeps score when people get ++'s and --'s
+3. @rickyrobinett invited me to hack-o-latern 2013 ( #HOL2013 ) and i didn't realize i could say no.
 
 == overview ==
 
@@ -25,5 +25,5 @@ the goal of this project is simple:  announce plusplusbot awards via an LED-illu
   
 ; LED controller : ./pumpkinbot_cc
   
-  ethernet shield -> arduino uno -> LED-laden pumpkin
+  ethernet shield -> arduino -> LED-laden pumpkin
       
