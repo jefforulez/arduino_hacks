@@ -170,7 +170,7 @@ void loop()
 		}
 		else
 		{
-			for ( int i = 0 ; i < 5 ; i++ )
+			for ( int i = 0 ; i < BLINK_NUMBER / 2 ; i++ )
 			{
 				allOff() ;
 				delay( BLINK_DELAY ) ;

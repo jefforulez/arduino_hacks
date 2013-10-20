@@ -58,27 +58,81 @@ irc.addListener(
 
 irc.addListener(
 	'message', 
-	function ( from, to, message ) {
+	function ( from, to, message ) 
+	{
 		console.log( "[message] from : " + from + ', to : ' + to + ', message : ' + message ) ;
+		
+		try
+		{
 		
 		if ( from == "plusplusbot" )
 		{
 			if (
-				message.match( /^(owie|daaa|awww|denied|ya dun)/ )
+				message.match( /^(owie|daaa|awww|denied|ya dun|zing|ooooh)/ )
 			)
 			{
-				sendCommandToArduino( 'minusminus' ) ;			
+				sendCommandToArduino( 'minusminus' ) ;
+				irc.say( IRC_CHANNEL, "TRICK! HAHA!" ) ;
 			}
 			else if (
-				message.match( /^(well played|suh-weet|fist|w00t|wOOt)/ )			
+				message.match( /^(well played|suh-weet|fist|w00t|wOOt|booyakasha|heyoo|nice|sweet)/ )
 			)
 			{
 				sendCommandToArduino( 'plusplus' ) ;
+				irc.say( IRC_CHANNEL, "TREAT! YAY!" ) ;
+			}
+			else if (
+				message.match( /^Sorry, you're trying to award too fast./ )
+			)
+			{
+				sendCommandToArduino( 'blink' ) ;
+				irc.say( IRC_CHANNEL, "Sorry?  There's no 'sorry' in " + IRC_CHANNEL ) ;
 			}
 			else
 			{
 				sendCommandToArduino( 'blink' ) ;
+				irc.say( IRC_CHANNEL, "Trick or Treat?!?" ) ;
 			}
+		}
+		else if (
+			( message.match( /pumpkinbot/ ) )
+			&& ( ! message.match( /pumpkinbot\+\+/ ) )
+			&& ( ! message.match( /pumpkinbot--/ ) )
+		)
+		{
+			if ( message.match( /trick/ ) && ! message.match( /treat/ ) )
+			{
+				sendCommandToArduino( 'minusminus' ) ;
+				irc.say( IRC_CHANNEL, "TRICK!" ) ;
+			}
+			else if ( ! message.match( /trick/ ) && message.match( /treat/ ) )
+			{
+				sendCommandToArduino( 'plusplus' ) ;
+				irc.say( IRC_CHANNEL, "TREAT!" ) ;				
+			}
+			else
+			{
+				sendCommandToArduino( 'blink' ) ;
+			
+				var replies = new Array(
+					"Happy Halloween!!",
+					"Beware of Witches!",
+					"R.I.P. gongbot",
+					"Happy Haunting!",
+					"BOOOO!!",
+					"Spoooky!"
+				) ;
+			
+				var i = Math.floor( ( Math.random() * ( replies.length - 1 ) ) ) ;
+			
+				irc.say( IRC_CHANNEL, replies[i] ) ;
+			}
+		}
+		
+		}
+		catch ( e ) 
+		{
+			console.log( 'irc.message, e : ' + e ) ;
 		}
 		
 	}
@@ -112,21 +166,21 @@ irc.addListener(
 
 function sendCommandToArduino ( command )
 {
-	try
-	{
-		var client = net.connect(
-			{ port : ARDUINO_PORT, host : arduino_ip },
-			function() {
-				console.log( 'client connected' ) ;
-				client.write( command + '\r\n' ) ;
-				console.log( 'client sent command: ' + command ) ;
-				client.end() ;
-			}
-		) ;
-	}
-	catch (e) {
-		console( "sendCommandToArduino(), e : " + e ) ;
-	}
+	var client = net.connect(
+		{ port : ARDUINO_PORT, host : arduino_ip },
+		function() {
+			console.log( 'client connected' ) ;
+			client.write( command + '\r\n' ) ;
+			console.log( 'client sent command: ' + command ) ;
+			client.end() ;
+		}
+	) ;
+	
+	client.on( 
+		'error',
+		function ( m ) { console.log( 'client, m : ' + m ) ; }
+	) ;
+
 }
 
 //
