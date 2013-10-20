@@ -1,0 +1,29 @@
+
+//
+// pumpkinbot
+//
+// author: @jefforulez
+//
+
+== introduction ==
+
+this project was born from three requirements:
+
+1. the @blip office has an irc server that people actually use
+2. the @blip irc server has an irc bot - plusplusbot - hat keeps score for when people say funny things
+3. @rickyrobinett invited me to hack-o-latern 2013 ( #HOL2013 ) and i wasn't smart enough to bail
+
+== overview ==
+
+the goal of this project is simple:  announce plusplusbot awards via an LED-illuminated jack-o-lantern
+
+== code ==
+
+; irc gateway : ./pumpkinbot_js
+
+  node.js app that monitors irc for plusplusbot awards and relays them to an arduino
+  
+; LED controller : ./pumpkinbot_cc
+  
+  ethernet shield -> arduino uno -> LED-laden pumpkin
+      
