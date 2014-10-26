@@ -17,9 +17,14 @@
 
 #include "Emic2TtsModule.h" 
 
+// tts
+void sayGiveMeCandy() ;
+
+// rfid
+void blockWhileRFIDPresent() ;
+
+// leds
 void ledsOn() ;
 void ledsOff() ;
-
-bool getRFIDTag() ;
 
 #endif

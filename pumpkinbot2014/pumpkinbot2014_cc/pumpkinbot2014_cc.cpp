@@ -9,39 +9,44 @@
 
 //
 // parallax rfid code borrowed from
-//
 // https://github.com/ril3y/Make-Projects/blob/master/Arduino_Parallax_RFID_Reader/Arduino_Parallax_RFID_Reader.pde
 //
 
 #include "pumpkinbot2014_cc.h"
 
 //
-// RFID variables
+// pin assignments
 //
 
-const int LED_PIN = 13 ;
+const int EMIC2_RX     =  2 ;
+const int EMIC2_TX     =  3 ;
 
-const int RFID_ENABLE = 8 ;
+const int RFID_RX      =  6 ;
+const int RFID_TX      =  7 ;
+const int RFID_ENABLE  =  8 ;
+
+const int LED_PIN      = 13 ;
+
+//
+// rfid globals
+//
 
 const int CODE_LEN         = 10   ; // max length of RFID tag
 const int VALIDATE_LENGTH  = 200  ; // maximum reads b/w tag read and validate
 const char START_BYTE      = 0x0A ;
 const char STOP_BYTE       = 0x0D ;
 
-const char candySourPatchKids[] = "_FIX_ME_" ;
+const char candySourPatchKids[] = "35021E906B" ;
 
-char tag[CODE_LEN] ;
+char rfid_tag[ CODE_LEN + 1 ] ;
 
 SoftwareSerial serialRFID( 6, 7) ; // RX, TX
 
 //
-// TTS variables
+// tts globals
 //
 
-const int emic2RxPin = 2 ;
-const int emic2TxPin = 3 ;
-
-SoftwareSerial emic2Serial = SoftwareSerial( emic2RxPin, emic2TxPin ) ;
+SoftwareSerial emic2Serial = SoftwareSerial( EMIC2_RX, EMIC2_TX ) ;
 Emic2TtsModule emic2TtsModule = Emic2TtsModule( &emic2Serial ) ;
 
 //
@@ -51,68 +56,149 @@ Emic2TtsModule emic2TtsModule = Emic2TtsModule( &emic2Serial ) ;
 void setup()
 {
 	Serial.begin( 9600 ) ;
-	Serial.println( "setup()" ) ;
 
 	//
-	// configure leds
+	// initialize pins
 	//
 
+	// tts
+	pinMode( EMIC2_RX, INPUT ) ;
+	pinMode( EMIC2_TX, OUTPUT ) ;
+
+	// rfid
+	pinMode( RFID_ENABLE, OUTPUT ) ;
+	pinMode( RFID_RX, INPUT ) ;
+	pinMode( RFID_TX, OUTPUT ) ;
+	
+	// leds
 	pinMode( LED_PIN, OUTPUT ) ;
 
 	//
-	// configure RFID
+	// initialize devices
 	//
 
-	serialRFID.begin( 2400 ) ;
-	pinMode( RFID_ENABLE, OUTPUT ) ;
+}
 
-	//
-	// configure TTS
-	//
+void loop()
+{
+	Serial.println( "loop()" ) ;
 
-	pinMode( emic2RxPin, INPUT ) ;
-	pinMode( emic2TxPin, OUTPUT ) ;
+	// blocks while an RFID tag is present
+	blockWhileRFIDPresent() ;
+
+	// 
+	sayGiveMeCandy() ;
+
+	delay( 1000 ) ;
+}
+
+//
+// TTS
+//
+
+void sayGiveMeCandy()
+{
+	Serial.println( "sayGiveMeCandy()" ) ;
+
 	emic2Serial.begin( 9600 ) ;
 	emic2TtsModule.init() ;
 	emic2TtsModule.setVolume( 40 ) ;
 	emic2TtsModule.setWordsPerMinute( 200 ) ;
 	emic2TtsModule.setVoice( PerfectPaul ) ;
-	emic2TtsModule.say( F("Initializing") ) ;
-	
-	//
+	emic2TtsModule.say( F("Yo, Bitches. Where's my candy") ) ;
 }
 
-bool has_candy_last = true ;
+//
+// RFID
+//
 
-void loop()
+void blockWhileRFIDPresent() 
 {
+	Serial.println( "blockWhileRFIDPresent()" ) ;
 	
-	if ( getRFIDTag() )
+	// start the serial connections
+	serialRFID.begin( 2400 ) ;
+	serialRFID.flush() ;
+	
+	// turn on the reader
+	digitalWrite( RFID_ENABLE, LOW ) ;
+			
+	while ( 42 )
 	{
-		Serial.println( tag ) ;
-		
-		if ( 
-			( strcmp( tag, candySourPatchKids ) != 0 ) &&
-			! has_candy_last
-		) {
-			emic2TtsModule.say( F("That's not my candy!") ) ;
+		// give the reader time?
+		delay( 1000 ) ;		
+
+		// clear the  rfid_tag
+		for ( int i = 0 ; i < CODE_LEN + 1 ; i++ ) {
+			rfid_tag[i] = 0x0 ;
 		}
-		else
-		{	
-			ledsOff() ;
-			has_candy_last = true ;
+			
+		byte byte_read = 0x0 ;
+	
+		// throw away garbage bytes and wait for the start_byte
+		while ( serialRFID.available() > 0 )
+		{
+			// Serial.println( "waiting for start_byte" ) ;
+			if ( ( byte_read = serialRFID.read() ) == START_BYTE ) { 
+				break ;
+			}
+			delay( 200 ) ;
 		}
-	}
-	else
-	{
+	
+		// break, if we haven't gotten a start byte by now
+		if ( byte_read != START_BYTE ) {
+			Serial.println( "error: expecting START_BYTE" ) ;
+			break ;
+		}
+
+		//
+		// BEGIN: read the rfid_tag
+		//
+
 		ledsOn() ;
-		has_candy_last = false ;
+
+		byte bytesread = 0x0 ;
+
+		while ( bytesread < CODE_LEN ) 
+		{
+			// Serial.println( "reading RFID tag" ) ;
+			
+			if ( serialRFID.available() <= 0 ) {
+				Serial.println( "error: expecting more bytes" ) ;
+				break ;
+			}
+			
+			if ( ( byte_read = serialRFID.read() ) == STOP_BYTE ) {
+				Serial.println( "error: expecting STOP_BYTE" ) ;
+				break ;
+			}
+			
+			rfid_tag[ bytesread++ ] = byte_read ;
+			
+			delay( 200 ) ;
+		}
 		
-		emic2TtsModule.say( F("Give me candy!") ) ;
+		Serial.println( "tag: " ) ;
+		Serial.println( rfid_tag ) ;
+
+		ledsOff() ;
+
+		//
+		// END: read the rfid_tag
+
+		// start the next loop with a clean input buffer
+		serialRFID.flush() ;				
 	}
 
-	delay( 1000 ) ;
+	// turn off the reader
+	digitalWrite( RFID_ENABLE, HIGH ) ;	
+	
+	return ;
 }
+
+//
+// LEDs
+//
 
 void ledsOn()
 {
@@ -124,73 +210,13 @@ void ledsOff()
 	digitalWrite( LED_PIN, HIGH ) ;
 }
 
-//
-//
-// RFID
-//
-//
 
-bool getRFIDTag() 
-{
-	for( int i = 0 ; i < CODE_LEN ; i++ ) {
-		tag[i] = 0x0 ;
-	}
 
-	serialRFID.begin( 2400 ) ;
-	serialRFID.flush() ;
-	
-	digitalWrite( RFID_ENABLE, LOW ) ;
-	ledsOn() ;
-
-	for ( int i = 0 ; i < 10 ; ++i )
-	{
-		if ( serialRFID.available() > 0 ) {
-			break ;
+/*
+		if ( 
+			( strcmp( tag, candySourPatchKids ) != 0 ) &&
+			! has_candy_last
+		) {
+			emic2TtsModule.say( F("That's not my candy!") ) ;
 		}
-		delay( 50 ) ;
-	}
-
-	if ( serialRFID.available() <= 0 ) {
-		digitalWrite( RFID_ENABLE, HIGH ) ;
-		return false ;
-	}
-	
-	byte next_byte = 0x0 ;
-		
-	//
-	// throw away garbage bytes and wait for the start_byte
-	//
-	
-	int max_loops = 10 ;
-		
-	while ( 
-		serialRFID.available() >= 0 &&
-		( next_byte = serialRFID.read() ) != START_BYTE && 
-		--max_loops > 0
-	)
-	{
-		serialRFID.read() ;
-		delay( 100 ) ;
-	}
-	
-	byte bytesread = 0 ;
-
-	while ( 
-		serialRFID.available() > 0 &&
-		bytesread < CODE_LEN 
-	) 
-	{
-		if ( ( next_byte = serialRFID.read() ) == STOP_BYTE) {
-			break ;
-		}
-			
-		tag[ bytesread++ ] = next_byte ;
-	}
-
-	digitalWrite( RFID_ENABLE, HIGH ) ;
-	ledsOff() ;
-	
-	serialRFID.flush() ;
-	
-	return true ;
-}
+*/
