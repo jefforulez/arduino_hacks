@@ -115,6 +115,8 @@ void sayGiveMeCandy()
 void blockWhileRFIDPresent() 
 {
 	Serial.println( "blockWhileRFIDPresent()" ) ;
+
+	int no_rfid_count = 0 ;
 	
 	// start the serial connections
 	serialRFID.begin( 2400 ) ;
@@ -122,7 +124,7 @@ void blockWhileRFIDPresent()
 	
 	// turn on the reader
 	digitalWrite( RFID_ENABLE, LOW ) ;
-			
+
 	while ( 42 )
 	{
 		// give the reader time?
@@ -146,8 +148,15 @@ void blockWhileRFIDPresent()
 		}
 	
 		// break, if we haven't gotten a start byte by now
-		if ( byte_read != START_BYTE ) {
+		if ( byte_read != START_BYTE ) 
+		{
 			Serial.println( "error: expecting START_BYTE" ) ;
+
+			// allow for one error to account for noise and timing issues
+			if ( no_rfid_count++ < 1 ) {
+				continue ;
+			}
+
 			break ;
 		}
 
