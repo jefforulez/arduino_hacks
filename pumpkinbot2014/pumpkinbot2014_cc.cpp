@@ -109,7 +109,8 @@ void sayGiveMeCandy()
 	emic2TtsModule.init() ;
 	emic2TtsModule.setVolume( 40 ) ;
 	emic2TtsModule.setWordsPerMinute( 250 ) ;
-	emic2TtsModule.setVoice( (EmicVoice)( voice_index++ % 9 ) ) ;
+	// emic2TtsModule.setVoice( (EmicVoice)( voice_index++ % 9 ) ) ;
+	emic2TtsModule.setVoice( HugeHarry ) ;
 	emic2TtsModule.say( F("Yo, witches. Where's my candy") ) ;
 }
 
