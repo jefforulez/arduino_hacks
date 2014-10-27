@@ -202,9 +202,6 @@ void blockWhileRFIDPresent()
 		Serial.println( rfid_tag ) ;			
 	}
 
-	// turn off the reader
-	// digitalWrite( RFID_ENABLE, HIGH ) ;	
-	
 	return ;
 }
 
@@ -222,13 +219,3 @@ void ledsOff()
 	digitalWrite( LED_PIN, LOW ) ;
 }
 
-
-
-/*
-		if ( 
-			( strcmp( tag, candySourPatchKids ) != 0 ) &&
-			! has_candy_last
-		) {
-			emic2TtsModule.say( F("That's not my candy!") ) ;
-		}
-*/
