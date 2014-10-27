@@ -77,6 +77,10 @@ void setup()
 	// initialize devices
 	//
 
+	// turn the rfid reader on
+	digitalWrite( RFID_ENABLE, LOW ) ;
+	delay( 1000 ) ;
+
 }
 
 void loop()
@@ -86,7 +90,6 @@ void loop()
 	// blocks while an RFID tag is present
 	blockWhileRFIDPresent() ;
 
-	// 
 	sayGiveMeCandy() ;
 
 	delay( 1000 ) ;
@@ -96,6 +99,8 @@ void loop()
 // TTS
 //
 
+int voice_index = 0 ;
+
 void sayGiveMeCandy()
 {
 	Serial.println( "sayGiveMeCandy()" ) ;
@@ -103,9 +108,9 @@ void sayGiveMeCandy()
 	emic2Serial.begin( 9600 ) ;
 	emic2TtsModule.init() ;
 	emic2TtsModule.setVolume( 40 ) ;
-	emic2TtsModule.setWordsPerMinute( 200 ) ;
-	emic2TtsModule.setVoice( PerfectPaul ) ;
-	emic2TtsModule.say( F("Yo, Bitches. Where's my candy") ) ;
+	emic2TtsModule.setWordsPerMinute( 250 ) ;
+	emic2TtsModule.setVoice( (EmicVoice)( voice_index++ % 9 ) ) ;
+	emic2TtsModule.say( F("Yo, witches. Where's my candy") ) ;
 }
 
 //
@@ -120,17 +125,16 @@ void blockWhileRFIDPresent()
 	
 	// start the serial connections
 	serialRFID.begin( 2400 ) ;
-	serialRFID.flush() ;
-	
-	// turn on the reader
-	digitalWrite( RFID_ENABLE, LOW ) ;
 
 	while ( 42 )
 	{
-		// give the reader time?
-		delay( 1000 ) ;		
+		// start the loop with a clean input buffer
+		serialRFID.flush() ;
 
-		// clear the  rfid_tag
+		// give the reader time to generate new data
+		delay( 400 ) ;		
+
+		// clear the rfid_tag
 		for ( int i = 0 ; i < CODE_LEN + 1 ; i++ ) {
 			rfid_tag[i] = 0x0 ;
 		}
@@ -140,9 +144,15 @@ void blockWhileRFIDPresent()
 		// throw away garbage bytes and wait for the start_byte
 		while ( serialRFID.available() > 0 )
 		{
-			// Serial.println( "waiting for start_byte" ) ;
-			if ( ( byte_read = serialRFID.read() ) == START_BYTE ) { 
+			byte_read = serialRFID.read() ;
+			
+			if ( byte_read == START_BYTE ) { 
 				break ;
+			}
+			else if ( byte_read == STOP_BYTE ) {
+				Serial.println( "received STOP_BYTE when expecting START_BYTE" ) ;
+				delay( 200 ) ;
+				continue ;			
 			}
 			delay( 200 ) ;
 		}
@@ -157,14 +167,14 @@ void blockWhileRFIDPresent()
 				continue ;
 			}
 
+			// turn the LEDs on when the rfid is missing
+			ledsOn() ;
+			
 			break ;
 		}
 
-		//
-		// BEGIN: read the rfid_tag
-		//
-
-		ledsOn() ;
+		// turn the LEDs off when the rfid is present
+		ledsOff() ;
 
 		byte bytesread = 0x0 ;
 
@@ -188,19 +198,11 @@ void blockWhileRFIDPresent()
 		}
 		
 		Serial.println( "tag: " ) ;
-		Serial.println( rfid_tag ) ;
-
-		ledsOff() ;
-
-		//
-		// END: read the rfid_tag
-
-		// start the next loop with a clean input buffer
-		serialRFID.flush() ;				
+		Serial.println( rfid_tag ) ;			
 	}
 
 	// turn off the reader
-	digitalWrite( RFID_ENABLE, HIGH ) ;	
+	// digitalWrite( RFID_ENABLE, HIGH ) ;	
 	
 	return ;
 }
@@ -211,12 +213,12 @@ void blockWhileRFIDPresent()
 
 void ledsOn()
 {
-	digitalWrite( LED_PIN, LOW ) ;
+	digitalWrite( LED_PIN, HIGH ) ;
 }
 
 void ledsOff()
 {
-	digitalWrite( LED_PIN, HIGH ) ;
+	digitalWrite( LED_PIN, LOW ) ;
 }
 
 
