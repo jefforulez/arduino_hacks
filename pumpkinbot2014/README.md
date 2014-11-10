@@ -1,7 +1,7 @@
 
 ## pumpkinbot 2014
 
-+ by @jefforulez
+by @jefforulez
 
 ### overview
 
