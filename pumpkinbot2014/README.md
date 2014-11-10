@@ -1,9 +1,7 @@
 
 ## pumpkinbot 2014
 
-## authors
-
-+ @jefforulez
++ by @jefforulez
 
 ### overview
 
@@ -19,9 +17,11 @@ this halloween, no one is going to steal my candy!  #hackolantern14
 
 - assorted jumpers, leds, and resistors
 
-### media
+### video
 
-+ [YouTube Video](https://www.youtube.com/watch?v=maNxQ23WhIE)
++ [yo witches! hack o'lantern 2014 #hackolantern14](https://www.youtube.com/watch?v=maNxQ23WhIE)
+
+### pics
 
 ![](https://raw.githubusercontent.com/jefforulez/arduino_hacks/master/pumpkinbot2014/pics/wiring_01.JPG)
 ![](https://raw.githubusercontent.com/jefforulez/arduino_hacks/master/pumpkinbot2014/pics/wiring_02.JPG)
