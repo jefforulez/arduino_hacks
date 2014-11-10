@@ -7,8 +7,8 @@ var rl  = require( 'readline' ) ;
 // constants
 //
 
-const IRC_SERVER = 'irc.example.com' ;
-const IRC_CHANNEL = '#pumpkinbot' ;
+const IRC_SERVER = 'irc.corp.pokkari.net' ;
+const IRC_CHANNEL = '#bliptv' ;
 
 const IRC_HANDLE = 'pumpkinbot' ;
 const IRC_REAL_NAME = 'pumpkinbot' ;
@@ -22,7 +22,7 @@ const SERVER_PORT = 46641 ;
 
 const ARDUINO_PORT = 14664 ;
 
-var arduino_ip = "127.0.0.1" ;
+var arduino_ip = "10.60.121.140" ;
 
 //
 // configure the irc client
@@ -65,17 +65,23 @@ irc.addListener(
 		try
 		{
 		
-		if ( from == "plusplusbot" )
+		if ( from == "gongbot" )
+		{
+			if ( message.match( /GONG/ ) ) {
+				sendCommandToArduino( 'blink' ) ;
+			}
+		}
+		else if ( from == "plusplusbot" )
 		{
 			if (
-				message.match( /^(owie|daaa|awww|denied|ya dun|zing|ooooh)/ )
+				message.match( /^(ouch|daaaang|denied|ooooh|owie|awwww snap|ya dun goofed|boom|oh no you did not)/ )
 			)
 			{
 				sendCommandToArduino( 'minusminus' ) ;
 				irc.say( IRC_CHANNEL, "TRICK! HAHA!" ) ;
 			}
 			else if (
-				message.match( /^(well played|suh-weet|fist|w00t|wOOt|booyakasha|heyoo|nice|sweet)/ )
+				message.match( /^(w00t|nice|suh-weet|well play|zing|you go girl|booyakasha|heyoooo|sweet|fist bump)/ )
 			)
 			{
 				sendCommandToArduino( 'plusplus' ) ;
@@ -92,6 +98,7 @@ irc.addListener(
 			{
 				sendCommandToArduino( 'blink' ) ;
 				irc.say( IRC_CHANNEL, "Trick or Treat?!?" ) ;
+				console.log( '[learn] ' + message ) ;
 			}
 		}
 		else if (
@@ -197,7 +204,7 @@ var server = net.createServer(
 				console.log( "[server:line] " + line ) ;
 				
 				// set target ip address
-				arduino_ip = line.trim ;
+				// arduino_ip = line.trim ;
 			} 
 		) ;
 	}

@@ -32,7 +32,7 @@ const int BLINK_DELAY  = 200 ;
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xEE } ;
 
 // @blip laptop
-char SERVER_IP[] = "10.60.121.111" ;
+char SERVER_IP[] = "10.60.121.55" ;
 const int SERVER_PORT = 46641 ;
 
 // arduino server

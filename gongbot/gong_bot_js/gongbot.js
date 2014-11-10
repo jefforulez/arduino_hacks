@@ -6,14 +6,15 @@ var net = require( 'net' ) ;
 // constants
 //
 
-const IRC_SERVER = 'irc.rulez.com' ;
-const IRC_CHANNEL = '#gongbot' ;
+const IRC_SERVER = 'irc.corp.pokkari.net' ;
+const IRC_CHANNEL = '#bliptv' ;
 
 const IRC_HANDLE = 'gongbot' ;
 const IRC_REAL_NAME = 'gongbot' ;
-const IRC_DEBUG = false ;
+const IRC_DEBUG = true ;
 
 const SERVER_PORT = 46640 ;
+
 
 //
 // configure the irc client
@@ -46,26 +47,27 @@ irc.addListener(
 	}
 ) ;
 
-/*
+
 irc.addListener(
 	'message', 
 	function ( from, to, message ) {
-    	console.log( "[message] from : " + from + ', to : ' + to + ', message : ' + message ) ;
+    		console.log( "[message] from : " + from + ', to : ' + to + ', message : ' + message ) ;
 	}
 ) ;
 
+
 irc.addListener(
 	'pm',
-	function ( from, message ) {
-    	console.log( "[pm] from : " + from + ', message : ' + message ) ;
+	function ( from, message ) 
+	{
+    		console.log( "[pm] from : " + from + ', message : ' + message ) ;
 	}
 ) ;
-*/
 
 irc.addListener(
  	'error', 
 	function ( message ) {
-    	console.log( "[error] " + message ) ;
+    		console.log( "[error] " + message ) ;
 	}
 ) ;
 
@@ -82,9 +84,13 @@ var server = net.createServer(
 			'data', 
 			function ( data ) 
 			{ 
-				if ( data > 1 ) {
-					console.log( "[server] +data : '" + data + "'" ) ; 
-					irc.say( IRC_CHANNEL, '*** GONG ***' ) ;	
+				if ( data > 5 ) {
+					console.log( "[server] gong, data : '" + data + "'" ) ; 
+					irc.say( IRC_CHANNEL, '*** GONG ***  (' + data + ')' ) ;	
+				}
+				else if ( data > 1 ) {
+					console.log( "[server] ding, data : '" + data + "'" ) ; 
+					irc.say( IRC_CHANNEL, '... ding ...  (' + data + ')' ) ;
 				}
 				else {
 					// console.log( "[server] -data : '" + data + "'" ) ; 
