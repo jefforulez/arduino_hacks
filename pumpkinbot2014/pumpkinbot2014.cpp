@@ -12,7 +12,7 @@
 // https://github.com/ril3y/Make-Projects/blob/master/Arduino_Parallax_RFID_Reader/Arduino_Parallax_RFID_Reader.pde
 //
 
-#include "pumpkinbot2014_cc.h"
+#include "pumpkinbot2014.h"
 
 //
 // pin assignments
@@ -109,8 +109,8 @@ void sayGiveMeCandy()
 	emic2TtsModule.init() ;
 	emic2TtsModule.setVolume( 40 ) ;
 	emic2TtsModule.setWordsPerMinute( 250 ) ;
-	// emic2TtsModule.setVoice( (EmicVoice)( voice_index++ % 9 ) ) ;
-	emic2TtsModule.setVoice( HugeHarry ) ;
+	emic2TtsModule.setVoice( (EmicVoice)( voice_index++ % 9 ) ) ;
+	// emic2TtsModule.setVoice( HugeHarry ) ;
 	emic2TtsModule.say( F("Yo, witches. Where's my candy") ) ;
 }
 

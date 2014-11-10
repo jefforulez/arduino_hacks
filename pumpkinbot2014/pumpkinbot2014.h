@@ -7,8 +7,8 @@
 // author: @jefforulez
 //
 
-#ifndef rulez_pumpkinbot2014_cc_h
-#define rulez_pumpkinbot2014_cc_h
+#ifndef rulez_pumpkinbot2014_h
+#define rulez_pumpkinbot2014_h
 
 #include <Arduino.h>
 
