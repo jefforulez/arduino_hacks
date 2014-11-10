@@ -1,16 +1,15 @@
 
-```
-//
-// pumpkinbot 2014
-//
-// author: @jefforulez
-//
+## pumpkinbot 2014
 
-== overview ==
+## authors
+
++ @jefforulez
+
+### overview
 
 this halloween, no one is going to steal my candy!  #hackolantern14
  
-== hardware ==
+### hardware
 
 - arduino - http://www.adafruit.com/products/50
 
@@ -20,8 +19,9 @@ this halloween, no one is going to steal my candy!  #hackolantern14
 
 - assorted jumpers, leds, and resistors
 
-== pics ==
-```
+### media
+
++ [YouTube Video](https://www.youtube.com/watch?v=maNxQ23WhIE)
 
 ![](https://raw.githubusercontent.com/jefforulez/arduino_hacks/master/pumpkinbot2014/pics/wiring_01.JPG)
 ![](https://raw.githubusercontent.com/jefforulez/arduino_hacks/master/pumpkinbot2014/pics/wiring_02.JPG)
