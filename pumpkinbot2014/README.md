@@ -5,12 +5,13 @@
 //
 // author: @jefforulez
 //
+```
 
-== overview ==
+## overview
 
 this halloween, no one is going to steal my candy!  #hackolantern14
 
-== hardware ==
+## hardware
 
 - arduino - http://www.adafruit.com/products/50
 
@@ -20,8 +21,7 @@ this halloween, no one is going to steal my candy!  #hackolantern14
 
 - assorted jumpers, leds, and resistors
 
-== pics ==
-```
+## pics
 
 ![](https://raw.githubusercontent.com/jefforulez/arduino_hacks/master/pumpkinbot2014/pics/wiring_01.JPG)
 ![](https://raw.githubusercontent.com/jefforulez/arduino_hacks/master/pumpkinbot2014/pics/wiring_02.JPG)
